@@ -1,0 +1,5 @@
+# Disable -Werror everywhere
+find . -type f -iname '*cmake*' -exec sed -i 's/-Werror//g' {} \;
+
+# Point to the correct Boost Python libs
+find . -type f -iname '*cmake*' -exec sed -i 's/python-py/python/g' {} \;

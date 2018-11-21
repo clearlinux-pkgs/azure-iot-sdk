@@ -1,0 +1,4 @@
+-Dskip_samples=ON
+-Duse_edge_modules=ON
+-Duse_prov_client=ON
+-Dbuild_as_dynamic=ON

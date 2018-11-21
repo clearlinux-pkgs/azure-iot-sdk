@@ -1,0 +1,2 @@
+0001-Use-Python-3.7.patch
+0002-Don-t-link-iothub_client-lib-to-itself.patch

@@ -1,0 +1,24 @@
+From cf07e60e8097094d7ca42fa50cbefa78a5d764fb Mon Sep 17 00:00:00 2001
+From: "Brett T. Warden" <brett.t.warden@intel.com>
+Date: Wed, 21 Nov 2018 12:04:05 -0800
+Subject: [PATCH] Don't link iothub_client lib to itself
+
+---
+ iothub_client/CMakeLists.txt | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/c/iothub_client/CMakeLists.txt b/c/iothub_client/CMakeLists.txt
+index 92547cbd..dd7e6dc9 100644
+--- a/c/iothub_client/CMakeLists.txt
++++ b/c/iothub_client/CMakeLists.txt
+@@ -416,7 +416,6 @@ if (${build_as_dynamic})
+         BUILD_WITH_INSTALL_RPATH TRUE
+     )
+     set(iothub_client_libs
+-        iothub_client_dll
+         ${iothub_client_libs}
+     )
+     if (${use_prov_client_core})
+-- 
+2.19.1
+

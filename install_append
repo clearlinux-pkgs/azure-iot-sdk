@@ -1,0 +1,19 @@
+export LD_LIBRARY_PATH=%{buildroot}/usr/lib64
+
+install -m 0755 clr-build/c/provisioning_client/deps/libmsr_riot.so %{buildroot}/usr/lib64/libmsr_riot.so
+install -m 0755 clr-build/c/provisioning_client/deps/utpm/libutpm.so %{buildroot}/usr/lib64/libutpm.so
+
+pushd ./build_all/linux/release_device_client
+cp -t iothub_client ../../../clr-build/c/python/src/iothub_client.so
+python3 setup.py install --root=%{buildroot}
+popd
+
+pushd ./build_all/linux/release_service_client
+cp -t iothub_service_client ../../../clr-build/c/python_service_client/src/iothub_service_client.so
+python3 setup.py install --root=%{buildroot}
+popd
+
+#pushd ./build_all/linux/release_provisioning_device_client
+#cp ../../../clr-build/c/provisioning_device_client_python/src/provisioning_device_client.so provisioning_device_client/provisioning_device_client.so
+#python setup.py install
+#popd
