@@ -70,6 +70,8 @@ BuildRequires : util-linux-dev
 Patch1: 0001-Use-Python-3.7.patch
 Patch2: 0002-Don-t-link-iothub_client-lib-to-itself.patch
 
+Provides: libaziotsharedutil_dll.so()(64bit
+
 %description
 DICE/RIoT Test and Tools
 
