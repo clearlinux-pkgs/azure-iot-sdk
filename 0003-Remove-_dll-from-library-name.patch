@@ -19,6 +19,54 @@ index 6e0dc368..999e3c9f 100644
  endif()
  
  set(aziotsharedutil_target_libs)
+diff --git a/c/umqtt/deps/c-utility/CMakeLists.txt b/c/umqtt/deps/c-utility/CMakeLists.txt
+index 6e0dc368..999e3c9f 100644
+--- a/c/umqtt/deps/c-utility/CMakeLists.txt
++++ b/c/umqtt/deps/c-utility/CMakeLists.txt
+@@ -406,7 +406,6 @@ if(${build_as_dynamic})
+         ${source_h_files}
+         ${def_files}
+     )
+-    set_target_properties(aziotsharedutil_dll PROPERTIES OUTPUT_NAME "aziotsharedutil_dll")
+ endif()
+ 
+ set(aziotsharedutil_target_libs)
+diff --git a/c/uamqp/deps/azure-c-shared-utility/CMakeLists.txt b/c/uamqp/deps/azure-c-shared-utility/CMakeLists.txt
+index 6e0dc368..999e3c9f 100644
+--- a/c/uamqp/deps/azure-c-shared-utility/CMakeLists.txt
++++ b/c/uamqp/deps/azure-c-shared-utility/CMakeLists.txt
+@@ -406,7 +406,6 @@ if(${build_as_dynamic})
+         ${source_h_files}
+         ${def_files}
+     )
+-    set_target_properties(aziotsharedutil_dll PROPERTIES OUTPUT_NAME "aziotsharedutil_dll")
+ endif()
+ 
+ set(aziotsharedutil_target_libs)
+diff --git a/c/provisioning_client/deps/utpm/deps/c-utility/CMakeLists.txt b/c/provisioning_client/deps/utpm/deps/c-utility/CMakeLists.txt
+index 6e0dc368..999e3c9f 100644
+--- a/c/provisioning_client/deps/utpm/deps/c-utility/CMakeLists.txt
++++ b/c/provisioning_client/deps/utpm/deps/c-utility/CMakeLists.txt
+@@ -406,7 +406,6 @@ if(${build_as_dynamic})
+         ${source_h_files}
+         ${def_files}
+     )
+-    set_target_properties(aziotsharedutil_dll PROPERTIES OUTPUT_NAME "aziotsharedutil_dll")
+ endif()
+ 
+ set(aziotsharedutil_target_libs)
+diff --git a/c/deps/uhttp/deps/c-utility/CMakeLists.txt b/c/deps/uhttp/deps/c-utility/CMakeLists.txt
+index 6e0dc368..999e3c9f 100644
+--- a/c/deps/uhttp/deps/c-utility/CMakeLists.txt
++++ b/c/deps/uhttp/deps/c-utility/CMakeLists.txt
+@@ -406,7 +406,6 @@ if(${build_as_dynamic})
+         ${source_h_files}
+         ${def_files}
+     )
+-    set_target_properties(aziotsharedutil_dll PROPERTIES OUTPUT_NAME "aziotsharedutil_dll")
+ endif()
+ 
+ set(aziotsharedutil_target_libs)
 -- 
 2.19.2
 

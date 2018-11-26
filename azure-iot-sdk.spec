@@ -4,7 +4,7 @@
 #
 Name     : azure-iot-sdk
 Version  : elease.2018.10.31
-Release  : 12
+Release  : 13
 URL      : https://github.com/Azure/azure-iot-sdk-python/archive/release_2018_10_31.tar.gz
 Source0  : https://github.com/Azure/azure-iot-sdk-python/archive/release_2018_10_31.tar.gz
 Source1  : https://github.com/Azure/azure-c-shared-utility/archive/4deb950a4154e9baa39c87d75dd323dd58e239b7.tar.gz
@@ -302,7 +302,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1543252450
+export SOURCE_DATE_EPOCH=1543261294
 mkdir -p clr-build
 pushd clr-build
 %cmake .. -Dskip_samples=ON \
@@ -313,7 +313,7 @@ make  %{?_smp_mflags} VERBOSE=1
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1543252450
+export SOURCE_DATE_EPOCH=1543261294
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/azure-iot-sdk
 cp LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/LICENSE
