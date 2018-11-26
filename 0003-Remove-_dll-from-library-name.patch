@@ -1,0 +1,24 @@
+From 9228d0742cbbca78cd6c7324b861c3f7d28ce766 Mon Sep 17 00:00:00 2001
+From: "Brett T. Warden" <brett.t.warden@intel.com>
+Date: Mon, 26 Nov 2018 09:08:25 -0800
+Subject: [PATCH] Remove _dll from library name
+
+---
+ CMakeLists.txt | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/c/c-utility/CMakeLists.txt b/c/c-utility/MakeLists.txt
+index 6e0dc368..999e3c9f 100644
+--- a/c/c-utility/CMakeLists.txt
++++ b/c/c-utility/CMakeLists.txt
+@@ -406,7 +406,6 @@ if(${build_as_dynamic})
+         ${source_h_files}
+         ${def_files}
+     )
+-    set_target_properties(aziotsharedutil_dll PROPERTIES OUTPUT_NAME "aziotsharedutil_dll")
+ endif()
+ 
+ set(aziotsharedutil_target_libs)
+-- 
+2.19.2
+
