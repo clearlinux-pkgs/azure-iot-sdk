@@ -1,0 +1,25 @@
+From ac56f300d31be23ea14335211b1b5a9d66da9a5e Mon Sep 17 00:00:00 2001
+From: "Brett T. Warden" <brett.t.warden@intel.com>
+Date: Mon, 26 Nov 2018 13:39:00 -0800
+Subject: [PATCH] Link to proper shared object
+
+---
+ serializer/CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/c/serializer/CMakeLists.txt b/c/serializer/CMakeLists.txt
+index 419f4d7b..4bec8140 100644
+--- a/c/serializer/CMakeLists.txt
++++ b/c/serializer/CMakeLists.txt
+@@ -77,7 +77,7 @@ if (${build_as_dynamic})
+         serializer_dll SHARED ${serializer_c_files} ${serializer_h_files} ./src/serializer.def
+     )
+     target_link_libraries(serializer_dll
+-        aziotsharedutil_dll
++        aziotsharedutil
+         parson
+     )
+ 
+-- 
+2.19.2
+

@@ -4,7 +4,7 @@
 #
 Name     : azure-iot-sdk
 Version  : elease.2018.10.31
-Release  : 13
+Release  : 14
 URL      : https://github.com/Azure/azure-iot-sdk-python/archive/release_2018_10_31.tar.gz
 Source0  : https://github.com/Azure/azure-iot-sdk-python/archive/release_2018_10_31.tar.gz
 Source1  : https://github.com/Azure/azure-c-shared-utility/archive/4deb950a4154e9baa39c87d75dd323dd58e239b7.tar.gz
@@ -70,6 +70,7 @@ BuildRequires : util-linux-dev
 Patch1: 0001-Use-Python-3.7.patch
 Patch2: 0002-Don-t-link-iothub_client-lib-to-itself.patch
 Patch3: 0003-Remove-_dll-from-library-name.patch
+Patch4: 0004-Link-to-proper-shared-object.patch
 
 %description
 DICE/RIoT Test and Tools
@@ -292,6 +293,7 @@ cp -r %{_topdir}/BUILD/azure-c-testrunnerswitcher-721daafd8c34616f77a7697210470c
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 ## build_prepend content
@@ -302,7 +304,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1543261294
+export SOURCE_DATE_EPOCH=1543268742
 mkdir -p clr-build
 pushd clr-build
 %cmake .. -Dskip_samples=ON \
@@ -313,7 +315,7 @@ make  %{?_smp_mflags} VERBOSE=1
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1543261294
+export SOURCE_DATE_EPOCH=1543268742
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/azure-iot-sdk
 cp LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/LICENSE

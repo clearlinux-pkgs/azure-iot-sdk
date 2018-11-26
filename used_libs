@@ -1,4 +1,3 @@
-libaziotsharedutil_dll.so
 libboost_python37.so.1.68.0
 libc.so.6
 libcrypto.so.1.1
