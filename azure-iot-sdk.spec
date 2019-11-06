@@ -4,7 +4,7 @@
 #
 Name     : azure-iot-sdk
 Version  : elease.2018.10.31
-Release  : 18
+Release  : 21
 URL      : https://github.com/Azure/azure-iot-sdk-python/archive/release_2018_10_31.tar.gz
 Source0  : https://github.com/Azure/azure-iot-sdk-python/archive/release_2018_10_31.tar.gz
 Source1  : https://github.com/Azure/azure-c-shared-utility/archive/4deb950a4154e9baa39c87d75dd323dd58e239b7.tar.gz
@@ -57,9 +57,11 @@ Requires: azure-iot-sdk-license = %{version}-%{release}
 Requires: azure-iot-sdk-python = %{version}-%{release}
 Requires: azure-iot-sdk-python3 = %{version}-%{release}
 Requires: msrest
+BuildRequires : apache-maven
 BuildRequires : boost-dev
 BuildRequires : buildreq-cmake
 BuildRequires : buildreq-distutils3
+BuildRequires : buildreq-mvn
 BuildRequires : curl-dev
 BuildRequires : msrest
 BuildRequires : openssl-dev
@@ -67,7 +69,7 @@ BuildRequires : pkg-config
 BuildRequires : pkgconfig(libcurl)
 BuildRequires : python3-dev
 BuildRequires : util-linux-dev
-Patch1: 0001-Use-Python-3.7.patch
+Patch1: 0001-Use-Python-3.8.patch
 Patch2: 0002-Don-t-link-iothub_client-lib-to-itself.patch
 Patch3: 0003-Remove-_dll-from-library-name.patch
 Patch4: 0004-Link-to-proper-shared-object.patch
@@ -80,6 +82,7 @@ Summary: dev components for the azure-iot-sdk package.
 Group: Development
 Requires: azure-iot-sdk-lib = %{version}-%{release}
 Provides: azure-iot-sdk-devel = %{version}-%{release}
+Requires: azure-iot-sdk = %{version}-%{release}
 
 %description dev
 dev components for the azure-iot-sdk package.
@@ -122,174 +125,175 @@ python3 components for the azure-iot-sdk package.
 
 %prep
 %setup -q -n azure-iot-sdk-python-release_2018_10_31
-cd ..
-%setup -q -T -D -n azure-iot-sdk-python-release_2018_10_31 -b 27
-cd ..
-%setup -q -T -D -n azure-iot-sdk-python-release_2018_10_31 -b 4
-cd ..
-%setup -q -T -D -n azure-iot-sdk-python-release_2018_10_31 -b 26
-cd ..
-%setup -q -T -D -n azure-iot-sdk-python-release_2018_10_31 -b 15
-cd ..
-%setup -q -T -D -n azure-iot-sdk-python-release_2018_10_31 -b 36
-cd ..
-%setup -q -T -D -n azure-iot-sdk-python-release_2018_10_31 -b 26
-cd ..
-%setup -q -T -D -n azure-iot-sdk-python-release_2018_10_31 -b 15
-cd ..
-%setup -q -T -D -n azure-iot-sdk-python-release_2018_10_31 -b 38
-cd ..
-%setup -q -T -D -n azure-iot-sdk-python-release_2018_10_31 -b 29
-cd ..
-%setup -q -T -D -n azure-iot-sdk-python-release_2018_10_31 -b 4
-cd ..
-%setup -q -T -D -n azure-iot-sdk-python-release_2018_10_31 -b 26
-cd ..
-%setup -q -T -D -n azure-iot-sdk-python-release_2018_10_31 -b 15
-cd ..
-%setup -q -T -D -n azure-iot-sdk-python-release_2018_10_31 -b 36
-cd ..
-%setup -q -T -D -n azure-iot-sdk-python-release_2018_10_31 -b 26
-cd ..
-%setup -q -T -D -n azure-iot-sdk-python-release_2018_10_31 -b 15
-cd ..
-%setup -q -T -D -n azure-iot-sdk-python-release_2018_10_31 -b 37
-cd ..
-%setup -q -T -D -n azure-iot-sdk-python-release_2018_10_31 -b 31
-cd ..
-%setup -q -T -D -n azure-iot-sdk-python-release_2018_10_31 -b 4
-cd ..
-%setup -q -T -D -n azure-iot-sdk-python-release_2018_10_31 -b 26
-cd ..
-%setup -q -T -D -n azure-iot-sdk-python-release_2018_10_31 -b 15
-cd ..
-%setup -q -T -D -n azure-iot-sdk-python-release_2018_10_31 -b 36
-cd ..
-%setup -q -T -D -n azure-iot-sdk-python-release_2018_10_31 -b 26
-cd ..
-%setup -q -T -D -n azure-iot-sdk-python-release_2018_10_31 -b 15
-cd ..
-%setup -q -T -D -n azure-iot-sdk-python-release_2018_10_31 -b 28
-cd ..
-%setup -q -T -D -n azure-iot-sdk-python-release_2018_10_31 -b 39
-cd ..
-%setup -q -T -D -n azure-iot-sdk-python-release_2018_10_31 -b 26
-cd ..
-%setup -q -T -D -n azure-iot-sdk-python-release_2018_10_31 -b 15
-cd ..
-%setup -q -T -D -n azure-iot-sdk-python-release_2018_10_31 -b 36
-cd ..
-%setup -q -T -D -n azure-iot-sdk-python-release_2018_10_31 -b 26
-cd ..
-%setup -q -T -D -n azure-iot-sdk-python-release_2018_10_31 -b 15
-cd ..
-%setup -q -T -D -n azure-iot-sdk-python-release_2018_10_31 -b 40
-cd ..
-%setup -q -T -D -n azure-iot-sdk-python-release_2018_10_31 -b 41
-cd ..
-%setup -q -T -D -n azure-iot-sdk-python-release_2018_10_31 -b 42
-cd ..
-%setup -q -T -D -n azure-iot-sdk-python-release_2018_10_31 -b 26
-cd ..
-%setup -q -T -D -n azure-iot-sdk-python-release_2018_10_31 -b 15
-cd ..
-%setup -q -T -D -n azure-iot-sdk-python-release_2018_10_31 -b 30
-cd ..
-%setup -q -T -D -n azure-iot-sdk-python-release_2018_10_31 -b 4
-cd ..
-%setup -q -T -D -n azure-iot-sdk-python-release_2018_10_31 -b 26
-cd ..
-%setup -q -T -D -n azure-iot-sdk-python-release_2018_10_31 -b 15
-cd ..
-%setup -q -T -D -n azure-iot-sdk-python-release_2018_10_31 -b 36
-cd ..
-%setup -q -T -D -n azure-iot-sdk-python-release_2018_10_31 -b 26
-cd ..
-%setup -q -T -D -n azure-iot-sdk-python-release_2018_10_31 -b 15
+cd %{_builddir}
+tar xf %{_sourcedir}/abacd2311a1b6d9fabc0743acf494d418fac8a30.tar.gz
+cd %{_builddir}
+tar xf %{_sourcedir}/4deb950a4154e9baa39c87d75dd323dd58e239b7.tar.gz
+cd %{_builddir}
+tar xf %{_sourcedir}/b1d09aff8212f1fb62ca9d6014cb3509d8b5559a.tar.gz
+cd %{_builddir}
+tar xf %{_sourcedir}/721daafd8c34616f77a7697210470c0227dca20b.tar.gz
+cd %{_builddir}
+tar xf %{_sourcedir}/c2c0f18d785ba85fef213302266f520c64201bb1.tar.gz
+cd %{_builddir}
+tar xf %{_sourcedir}/b1d09aff8212f1fb62ca9d6014cb3509d8b5559a.tar.gz
+cd %{_builddir}
+tar xf %{_sourcedir}/721daafd8c34616f77a7697210470c0227dca20b.tar.gz
+cd %{_builddir}
+tar xf %{_sourcedir}/0a1896939faff5f69e179637fc49f678ff0128ba.tar.gz
+cd %{_builddir}
+tar xf %{_sourcedir}/d06524b543c52519e20da843d2df1d6e6e40a05d.tar.gz
+cd %{_builddir}
+tar xf %{_sourcedir}/4deb950a4154e9baa39c87d75dd323dd58e239b7.tar.gz
+cd %{_builddir}
+tar xf %{_sourcedir}/b1d09aff8212f1fb62ca9d6014cb3509d8b5559a.tar.gz
+cd %{_builddir}
+tar xf %{_sourcedir}/721daafd8c34616f77a7697210470c0227dca20b.tar.gz
+cd %{_builddir}
+tar xf %{_sourcedir}/c2c0f18d785ba85fef213302266f520c64201bb1.tar.gz
+cd %{_builddir}
+tar xf %{_sourcedir}/b1d09aff8212f1fb62ca9d6014cb3509d8b5559a.tar.gz
+cd %{_builddir}
+tar xf %{_sourcedir}/721daafd8c34616f77a7697210470c0227dca20b.tar.gz
+cd %{_builddir}
+tar xf %{_sourcedir}/bc97a5eaff53535eddbdf95b4f477c6caf3b7788.tar.gz
+cd %{_builddir}
+tar xf %{_sourcedir}/a82e758bfcea806167e19d9dd94c2e1cc223aaee.tar.gz
+cd %{_builddir}
+tar xf %{_sourcedir}/4deb950a4154e9baa39c87d75dd323dd58e239b7.tar.gz
+cd %{_builddir}
+tar xf %{_sourcedir}/b1d09aff8212f1fb62ca9d6014cb3509d8b5559a.tar.gz
+cd %{_builddir}
+tar xf %{_sourcedir}/721daafd8c34616f77a7697210470c0227dca20b.tar.gz
+cd %{_builddir}
+tar xf %{_sourcedir}/c2c0f18d785ba85fef213302266f520c64201bb1.tar.gz
+cd %{_builddir}
+tar xf %{_sourcedir}/b1d09aff8212f1fb62ca9d6014cb3509d8b5559a.tar.gz
+cd %{_builddir}
+tar xf %{_sourcedir}/721daafd8c34616f77a7697210470c0227dca20b.tar.gz
+cd %{_builddir}
+tar xf %{_sourcedir}/8da237b55317e575b361dd630ff5d862bc0b760c.tar.gz
+cd %{_builddir}
+tar xf %{_sourcedir}/4deb950a4154e9baa39c87d75dd323dd58e239b7.tar.gz
+cd %{_builddir}
+tar xf %{_sourcedir}/b1d09aff8212f1fb62ca9d6014cb3509d8b5559a.tar.gz
+cd %{_builddir}
+tar xf %{_sourcedir}/721daafd8c34616f77a7697210470c0227dca20b.tar.gz
+cd %{_builddir}
+tar xf %{_sourcedir}/c2c0f18d785ba85fef213302266f520c64201bb1.tar.gz
+cd %{_builddir}
+tar xf %{_sourcedir}/b1d09aff8212f1fb62ca9d6014cb3509d8b5559a.tar.gz
+cd %{_builddir}
+tar xf %{_sourcedir}/721daafd8c34616f77a7697210470c0227dca20b.tar.gz
+cd %{_builddir}
+tar xf %{_sourcedir}/721daafd8c34616f77a7697210470c0227dca20b.tar.gz
+cd %{_builddir}
+tar xf %{_sourcedir}/b1d09aff8212f1fb62ca9d6014cb3509d8b5559a.tar.gz
+cd %{_builddir}
+tar xf %{_sourcedir}/c2c0f18d785ba85fef213302266f520c64201bb1.tar.gz
+cd %{_builddir}
+tar xf %{_sourcedir}/b1d09aff8212f1fb62ca9d6014cb3509d8b5559a.tar.gz
+cd %{_builddir}
+tar xf %{_sourcedir}/721daafd8c34616f77a7697210470c0227dca20b.tar.gz
+cd %{_builddir}
+tar xf %{_sourcedir}/640f9d649bd81f10ea6ce005e207cafe49ae3383.tar.gz
+cd %{_builddir}
+tar xf %{_sourcedir}/4deb950a4154e9baa39c87d75dd323dd58e239b7.tar.gz
+cd %{_builddir}
+tar xf %{_sourcedir}/b1d09aff8212f1fb62ca9d6014cb3509d8b5559a.tar.gz
+cd %{_builddir}
+tar xf %{_sourcedir}/721daafd8c34616f77a7697210470c0227dca20b.tar.gz
+cd %{_builddir}
+tar xf %{_sourcedir}/c2c0f18d785ba85fef213302266f520c64201bb1.tar.gz
+cd %{_builddir}
+tar xf %{_sourcedir}/b1d09aff8212f1fb62ca9d6014cb3509d8b5559a.tar.gz
+cd %{_builddir}
+tar xf %{_sourcedir}/721daafd8c34616f77a7697210470c0227dca20b.tar.gz
+cd %{_builddir}/azure-iot-sdk-python-release_2018_10_31
 mkdir -p c
-cp -r %{_topdir}/BUILD/azure-iot-sdk-c-abacd2311a1b6d9fabc0743acf494d418fac8a30/* %{_topdir}/BUILD/azure-iot-sdk-python-release_2018_10_31/c
+cp -r %{_builddir}/azure-iot-sdk-c-abacd2311a1b6d9fabc0743acf494d418fac8a30/* %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c
 mkdir -p c/c-utility
-cp -r %{_topdir}/BUILD/azure-c-shared-utility-4deb950a4154e9baa39c87d75dd323dd58e239b7/* %{_topdir}/BUILD/azure-iot-sdk-python-release_2018_10_31/c/c-utility
+cp -r %{_builddir}/azure-c-shared-utility-4deb950a4154e9baa39c87d75dd323dd58e239b7/* %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/c-utility
 mkdir -p c/c-utility/testtools/ctest
-cp -r %{_topdir}/BUILD/azure-ctest-b1d09aff8212f1fb62ca9d6014cb3509d8b5559a/* %{_topdir}/BUILD/azure-iot-sdk-python-release_2018_10_31/c/c-utility/testtools/ctest
+cp -r %{_builddir}/azure-ctest-b1d09aff8212f1fb62ca9d6014cb3509d8b5559a/* %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/c-utility/testtools/ctest
 mkdir -p c/c-utility/testtools/testrunner
-cp -r %{_topdir}/BUILD/azure-c-testrunnerswitcher-721daafd8c34616f77a7697210470c0227dca20b/* %{_topdir}/BUILD/azure-iot-sdk-python-release_2018_10_31/c/c-utility/testtools/testrunner
+cp -r %{_builddir}/azure-c-testrunnerswitcher-721daafd8c34616f77a7697210470c0227dca20b/* %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/c-utility/testtools/testrunner
 mkdir -p c/c-utility/testtools/umock-c
-cp -r %{_topdir}/BUILD/umock-c-c2c0f18d785ba85fef213302266f520c64201bb1/* %{_topdir}/BUILD/azure-iot-sdk-python-release_2018_10_31/c/c-utility/testtools/umock-c
+cp -r %{_builddir}/umock-c-c2c0f18d785ba85fef213302266f520c64201bb1/* %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/c-utility/testtools/umock-c
 mkdir -p c/c-utility/testtools/umock-c/deps/ctest
-cp -r %{_topdir}/BUILD/azure-ctest-b1d09aff8212f1fb62ca9d6014cb3509d8b5559a/* %{_topdir}/BUILD/azure-iot-sdk-python-release_2018_10_31/c/c-utility/testtools/umock-c/deps/ctest
+cp -r %{_builddir}/azure-ctest-b1d09aff8212f1fb62ca9d6014cb3509d8b5559a/* %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/c-utility/testtools/umock-c/deps/ctest
 mkdir -p c/c-utility/testtools/umock-c/deps/testrunner
-cp -r %{_topdir}/BUILD/azure-c-testrunnerswitcher-721daafd8c34616f77a7697210470c0227dca20b/* %{_topdir}/BUILD/azure-iot-sdk-python-release_2018_10_31/c/c-utility/testtools/umock-c/deps/testrunner
+cp -r %{_builddir}/azure-c-testrunnerswitcher-721daafd8c34616f77a7697210470c0227dca20b/* %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/c-utility/testtools/umock-c/deps/testrunner
 mkdir -p c/deps/parson
-cp -r %{_topdir}/BUILD/parson-0a1896939faff5f69e179637fc49f678ff0128ba/* %{_topdir}/BUILD/azure-iot-sdk-python-release_2018_10_31/c/deps/parson
+cp -r %{_builddir}/parson-0a1896939faff5f69e179637fc49f678ff0128ba/* %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/deps/parson
 mkdir -p c/deps/uhttp
-cp -r %{_topdir}/BUILD/azure-uhttp-c-d06524b543c52519e20da843d2df1d6e6e40a05d/* %{_topdir}/BUILD/azure-iot-sdk-python-release_2018_10_31/c/deps/uhttp
+cp -r %{_builddir}/azure-uhttp-c-d06524b543c52519e20da843d2df1d6e6e40a05d/* %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/deps/uhttp
 mkdir -p c/deps/uhttp/deps/c-utility
-cp -r %{_topdir}/BUILD/azure-c-shared-utility-4deb950a4154e9baa39c87d75dd323dd58e239b7/* %{_topdir}/BUILD/azure-iot-sdk-python-release_2018_10_31/c/deps/uhttp/deps/c-utility
+cp -r %{_builddir}/azure-c-shared-utility-4deb950a4154e9baa39c87d75dd323dd58e239b7/* %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/deps/uhttp/deps/c-utility
 mkdir -p c/deps/uhttp/deps/c-utility/testtools/ctest
-cp -r %{_topdir}/BUILD/azure-ctest-b1d09aff8212f1fb62ca9d6014cb3509d8b5559a/* %{_topdir}/BUILD/azure-iot-sdk-python-release_2018_10_31/c/deps/uhttp/deps/c-utility/testtools/ctest
+cp -r %{_builddir}/azure-ctest-b1d09aff8212f1fb62ca9d6014cb3509d8b5559a/* %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/deps/uhttp/deps/c-utility/testtools/ctest
 mkdir -p c/deps/uhttp/deps/c-utility/testtools/testrunner
-cp -r %{_topdir}/BUILD/azure-c-testrunnerswitcher-721daafd8c34616f77a7697210470c0227dca20b/* %{_topdir}/BUILD/azure-iot-sdk-python-release_2018_10_31/c/deps/uhttp/deps/c-utility/testtools/testrunner
+cp -r %{_builddir}/azure-c-testrunnerswitcher-721daafd8c34616f77a7697210470c0227dca20b/* %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/deps/uhttp/deps/c-utility/testtools/testrunner
 mkdir -p c/deps/uhttp/deps/c-utility/testtools/umock-c
-cp -r %{_topdir}/BUILD/umock-c-c2c0f18d785ba85fef213302266f520c64201bb1/* %{_topdir}/BUILD/azure-iot-sdk-python-release_2018_10_31/c/deps/uhttp/deps/c-utility/testtools/umock-c
+cp -r %{_builddir}/umock-c-c2c0f18d785ba85fef213302266f520c64201bb1/* %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/deps/uhttp/deps/c-utility/testtools/umock-c
 mkdir -p c/deps/uhttp/deps/c-utility/testtools/umock-c/deps/ctest
-cp -r %{_topdir}/BUILD/azure-ctest-b1d09aff8212f1fb62ca9d6014cb3509d8b5559a/* %{_topdir}/BUILD/azure-iot-sdk-python-release_2018_10_31/c/deps/uhttp/deps/c-utility/testtools/umock-c/deps/ctest
+cp -r %{_builddir}/azure-ctest-b1d09aff8212f1fb62ca9d6014cb3509d8b5559a/* %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/deps/uhttp/deps/c-utility/testtools/umock-c/deps/ctest
 mkdir -p c/deps/uhttp/deps/c-utility/testtools/umock-c/deps/testrunner
-cp -r %{_topdir}/BUILD/azure-c-testrunnerswitcher-721daafd8c34616f77a7697210470c0227dca20b/* %{_topdir}/BUILD/azure-iot-sdk-python-release_2018_10_31/c/deps/uhttp/deps/c-utility/testtools/umock-c/deps/testrunner
+cp -r %{_builddir}/azure-c-testrunnerswitcher-721daafd8c34616f77a7697210470c0227dca20b/* %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/deps/uhttp/deps/c-utility/testtools/umock-c/deps/testrunner
 mkdir -p c/provisioning_client/deps/RIoT
-cp -r %{_topdir}/BUILD/RIoT-bc97a5eaff53535eddbdf95b4f477c6caf3b7788/* %{_topdir}/BUILD/azure-iot-sdk-python-release_2018_10_31/c/provisioning_client/deps/RIoT
+cp -r %{_builddir}/RIoT-bc97a5eaff53535eddbdf95b4f477c6caf3b7788/* %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/provisioning_client/deps/RIoT
 mkdir -p c/provisioning_client/deps/utpm
-cp -r %{_topdir}/BUILD/azure-utpm-c-a82e758bfcea806167e19d9dd94c2e1cc223aaee/* %{_topdir}/BUILD/azure-iot-sdk-python-release_2018_10_31/c/provisioning_client/deps/utpm
+cp -r %{_builddir}/azure-utpm-c-a82e758bfcea806167e19d9dd94c2e1cc223aaee/* %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/provisioning_client/deps/utpm
 mkdir -p c/provisioning_client/deps/utpm/deps/c-utility
-cp -r %{_topdir}/BUILD/azure-c-shared-utility-4deb950a4154e9baa39c87d75dd323dd58e239b7/* %{_topdir}/BUILD/azure-iot-sdk-python-release_2018_10_31/c/provisioning_client/deps/utpm/deps/c-utility
+cp -r %{_builddir}/azure-c-shared-utility-4deb950a4154e9baa39c87d75dd323dd58e239b7/* %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/provisioning_client/deps/utpm/deps/c-utility
 mkdir -p c/provisioning_client/deps/utpm/deps/c-utility/testtools/ctest
-cp -r %{_topdir}/BUILD/azure-ctest-b1d09aff8212f1fb62ca9d6014cb3509d8b5559a/* %{_topdir}/BUILD/azure-iot-sdk-python-release_2018_10_31/c/provisioning_client/deps/utpm/deps/c-utility/testtools/ctest
+cp -r %{_builddir}/azure-ctest-b1d09aff8212f1fb62ca9d6014cb3509d8b5559a/* %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/provisioning_client/deps/utpm/deps/c-utility/testtools/ctest
 mkdir -p c/provisioning_client/deps/utpm/deps/c-utility/testtools/testrunner
-cp -r %{_topdir}/BUILD/azure-c-testrunnerswitcher-721daafd8c34616f77a7697210470c0227dca20b/* %{_topdir}/BUILD/azure-iot-sdk-python-release_2018_10_31/c/provisioning_client/deps/utpm/deps/c-utility/testtools/testrunner
+cp -r %{_builddir}/azure-c-testrunnerswitcher-721daafd8c34616f77a7697210470c0227dca20b/* %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/provisioning_client/deps/utpm/deps/c-utility/testtools/testrunner
 mkdir -p c/provisioning_client/deps/utpm/deps/c-utility/testtools/umock-c
-cp -r %{_topdir}/BUILD/umock-c-c2c0f18d785ba85fef213302266f520c64201bb1/* %{_topdir}/BUILD/azure-iot-sdk-python-release_2018_10_31/c/provisioning_client/deps/utpm/deps/c-utility/testtools/umock-c
+cp -r %{_builddir}/umock-c-c2c0f18d785ba85fef213302266f520c64201bb1/* %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/provisioning_client/deps/utpm/deps/c-utility/testtools/umock-c
 mkdir -p c/provisioning_client/deps/utpm/deps/c-utility/testtools/umock-c/deps/ctest
-cp -r %{_topdir}/BUILD/azure-ctest-b1d09aff8212f1fb62ca9d6014cb3509d8b5559a/* %{_topdir}/BUILD/azure-iot-sdk-python-release_2018_10_31/c/provisioning_client/deps/utpm/deps/c-utility/testtools/umock-c/deps/ctest
+cp -r %{_builddir}/azure-ctest-b1d09aff8212f1fb62ca9d6014cb3509d8b5559a/* %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/provisioning_client/deps/utpm/deps/c-utility/testtools/umock-c/deps/ctest
 mkdir -p c/provisioning_client/deps/utpm/deps/c-utility/testtools/umock-c/deps/testrunner
-cp -r %{_topdir}/BUILD/azure-c-testrunnerswitcher-721daafd8c34616f77a7697210470c0227dca20b/* %{_topdir}/BUILD/azure-iot-sdk-python-release_2018_10_31/c/provisioning_client/deps/utpm/deps/c-utility/testtools/umock-c/deps/testrunner
+cp -r %{_builddir}/azure-c-testrunnerswitcher-721daafd8c34616f77a7697210470c0227dca20b/* %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/provisioning_client/deps/utpm/deps/c-utility/testtools/umock-c/deps/testrunner
 mkdir -p c/uamqp
-cp -r %{_topdir}/BUILD/azure-uamqp-c-8da237b55317e575b361dd630ff5d862bc0b760c/* %{_topdir}/BUILD/azure-iot-sdk-python-release_2018_10_31/c/uamqp
+cp -r %{_builddir}/azure-uamqp-c-8da237b55317e575b361dd630ff5d862bc0b760c/* %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/uamqp
 mkdir -p c/uamqp/deps/azure-c-shared-utility
-cp -r %{_topdir}/BUILD/azure-c-shared-utility-4deb950a4154e9baa39c87d75dd323dd58e239b7/* %{_topdir}/BUILD/azure-iot-sdk-python-release_2018_10_31/c/uamqp/deps/azure-c-shared-utility
+cp -r %{_builddir}/azure-c-shared-utility-4deb950a4154e9baa39c87d75dd323dd58e239b7/* %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/uamqp/deps/azure-c-shared-utility
 mkdir -p c/uamqp/deps/azure-c-shared-utility/testtools/ctest
-cp -r %{_topdir}/BUILD/azure-ctest-b1d09aff8212f1fb62ca9d6014cb3509d8b5559a/* %{_topdir}/BUILD/azure-iot-sdk-python-release_2018_10_31/c/uamqp/deps/azure-c-shared-utility/testtools/ctest
+cp -r %{_builddir}/azure-ctest-b1d09aff8212f1fb62ca9d6014cb3509d8b5559a/* %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/uamqp/deps/azure-c-shared-utility/testtools/ctest
 mkdir -p c/uamqp/deps/azure-c-shared-utility/testtools/testrunner
-cp -r %{_topdir}/BUILD/azure-c-testrunnerswitcher-721daafd8c34616f77a7697210470c0227dca20b/* %{_topdir}/BUILD/azure-iot-sdk-python-release_2018_10_31/c/uamqp/deps/azure-c-shared-utility/testtools/testrunner
+cp -r %{_builddir}/azure-c-testrunnerswitcher-721daafd8c34616f77a7697210470c0227dca20b/* %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/uamqp/deps/azure-c-shared-utility/testtools/testrunner
 mkdir -p c/uamqp/deps/azure-c-shared-utility/testtools/umock-c
-cp -r %{_topdir}/BUILD/umock-c-c2c0f18d785ba85fef213302266f520c64201bb1/* %{_topdir}/BUILD/azure-iot-sdk-python-release_2018_10_31/c/uamqp/deps/azure-c-shared-utility/testtools/umock-c
+cp -r %{_builddir}/umock-c-c2c0f18d785ba85fef213302266f520c64201bb1/* %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/uamqp/deps/azure-c-shared-utility/testtools/umock-c
 mkdir -p c/uamqp/deps/azure-c-shared-utility/testtools/umock-c/deps/ctest
-cp -r %{_topdir}/BUILD/azure-ctest-b1d09aff8212f1fb62ca9d6014cb3509d8b5559a/* %{_topdir}/BUILD/azure-iot-sdk-python-release_2018_10_31/c/uamqp/deps/azure-c-shared-utility/testtools/umock-c/deps/ctest
+cp -r %{_builddir}/azure-ctest-b1d09aff8212f1fb62ca9d6014cb3509d8b5559a/* %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/uamqp/deps/azure-c-shared-utility/testtools/umock-c/deps/ctest
 mkdir -p c/uamqp/deps/azure-c-shared-utility/testtools/umock-c/deps/testrunner
-cp -r %{_topdir}/BUILD/azure-c-testrunnerswitcher-721daafd8c34616f77a7697210470c0227dca20b/* %{_topdir}/BUILD/azure-iot-sdk-python-release_2018_10_31/c/uamqp/deps/azure-c-shared-utility/testtools/umock-c/deps/testrunner
+cp -r %{_builddir}/azure-c-testrunnerswitcher-721daafd8c34616f77a7697210470c0227dca20b/* %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/uamqp/deps/azure-c-shared-utility/testtools/umock-c/deps/testrunner
 mkdir -p c/uamqp/deps/azure-c-testrunnerswitcher
-cp -r %{_topdir}/BUILD/azure-c-testrunnerswitcher-721daafd8c34616f77a7697210470c0227dca20b/* %{_topdir}/BUILD/azure-iot-sdk-python-release_2018_10_31/c/uamqp/deps/azure-c-testrunnerswitcher
+cp -r %{_builddir}/azure-c-testrunnerswitcher-721daafd8c34616f77a7697210470c0227dca20b/* %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/uamqp/deps/azure-c-testrunnerswitcher
 mkdir -p c/uamqp/deps/azure-ctest
-cp -r %{_topdir}/BUILD/azure-ctest-b1d09aff8212f1fb62ca9d6014cb3509d8b5559a/* %{_topdir}/BUILD/azure-iot-sdk-python-release_2018_10_31/c/uamqp/deps/azure-ctest
+cp -r %{_builddir}/azure-ctest-b1d09aff8212f1fb62ca9d6014cb3509d8b5559a/* %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/uamqp/deps/azure-ctest
 mkdir -p c/uamqp/deps/umock-c
-cp -r %{_topdir}/BUILD/umock-c-c2c0f18d785ba85fef213302266f520c64201bb1/* %{_topdir}/BUILD/azure-iot-sdk-python-release_2018_10_31/c/uamqp/deps/umock-c
+cp -r %{_builddir}/umock-c-c2c0f18d785ba85fef213302266f520c64201bb1/* %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/uamqp/deps/umock-c
 mkdir -p c/uamqp/deps/umock-c/deps/ctest
-cp -r %{_topdir}/BUILD/azure-ctest-b1d09aff8212f1fb62ca9d6014cb3509d8b5559a/* %{_topdir}/BUILD/azure-iot-sdk-python-release_2018_10_31/c/uamqp/deps/umock-c/deps/ctest
+cp -r %{_builddir}/azure-ctest-b1d09aff8212f1fb62ca9d6014cb3509d8b5559a/* %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/uamqp/deps/umock-c/deps/ctest
 mkdir -p c/uamqp/deps/umock-c/deps/testrunner
-cp -r %{_topdir}/BUILD/azure-c-testrunnerswitcher-721daafd8c34616f77a7697210470c0227dca20b/* %{_topdir}/BUILD/azure-iot-sdk-python-release_2018_10_31/c/uamqp/deps/umock-c/deps/testrunner
+cp -r %{_builddir}/azure-c-testrunnerswitcher-721daafd8c34616f77a7697210470c0227dca20b/* %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/uamqp/deps/umock-c/deps/testrunner
 mkdir -p c/umqtt
-cp -r %{_topdir}/BUILD/azure-umqtt-c-640f9d649bd81f10ea6ce005e207cafe49ae3383/* %{_topdir}/BUILD/azure-iot-sdk-python-release_2018_10_31/c/umqtt
+cp -r %{_builddir}/azure-umqtt-c-640f9d649bd81f10ea6ce005e207cafe49ae3383/* %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/umqtt
 mkdir -p c/umqtt/deps/c-utility
-cp -r %{_topdir}/BUILD/azure-c-shared-utility-4deb950a4154e9baa39c87d75dd323dd58e239b7/* %{_topdir}/BUILD/azure-iot-sdk-python-release_2018_10_31/c/umqtt/deps/c-utility
+cp -r %{_builddir}/azure-c-shared-utility-4deb950a4154e9baa39c87d75dd323dd58e239b7/* %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/umqtt/deps/c-utility
 mkdir -p c/umqtt/deps/c-utility/testtools/ctest
-cp -r %{_topdir}/BUILD/azure-ctest-b1d09aff8212f1fb62ca9d6014cb3509d8b5559a/* %{_topdir}/BUILD/azure-iot-sdk-python-release_2018_10_31/c/umqtt/deps/c-utility/testtools/ctest
+cp -r %{_builddir}/azure-ctest-b1d09aff8212f1fb62ca9d6014cb3509d8b5559a/* %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/umqtt/deps/c-utility/testtools/ctest
 mkdir -p c/umqtt/deps/c-utility/testtools/testrunner
-cp -r %{_topdir}/BUILD/azure-c-testrunnerswitcher-721daafd8c34616f77a7697210470c0227dca20b/* %{_topdir}/BUILD/azure-iot-sdk-python-release_2018_10_31/c/umqtt/deps/c-utility/testtools/testrunner
+cp -r %{_builddir}/azure-c-testrunnerswitcher-721daafd8c34616f77a7697210470c0227dca20b/* %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/umqtt/deps/c-utility/testtools/testrunner
 mkdir -p c/umqtt/deps/c-utility/testtools/umock-c
-cp -r %{_topdir}/BUILD/umock-c-c2c0f18d785ba85fef213302266f520c64201bb1/* %{_topdir}/BUILD/azure-iot-sdk-python-release_2018_10_31/c/umqtt/deps/c-utility/testtools/umock-c
+cp -r %{_builddir}/umock-c-c2c0f18d785ba85fef213302266f520c64201bb1/* %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/umqtt/deps/c-utility/testtools/umock-c
 mkdir -p c/umqtt/deps/c-utility/testtools/umock-c/deps/ctest
-cp -r %{_topdir}/BUILD/azure-ctest-b1d09aff8212f1fb62ca9d6014cb3509d8b5559a/* %{_topdir}/BUILD/azure-iot-sdk-python-release_2018_10_31/c/umqtt/deps/c-utility/testtools/umock-c/deps/ctest
+cp -r %{_builddir}/azure-ctest-b1d09aff8212f1fb62ca9d6014cb3509d8b5559a/* %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/umqtt/deps/c-utility/testtools/umock-c/deps/ctest
 mkdir -p c/umqtt/deps/c-utility/testtools/umock-c/deps/testrunner
-cp -r %{_topdir}/BUILD/azure-c-testrunnerswitcher-721daafd8c34616f77a7697210470c0227dca20b/* %{_topdir}/BUILD/azure-iot-sdk-python-release_2018_10_31/c/umqtt/deps/c-utility/testtools/umock-c/deps/testrunner
+cp -r %{_builddir}/azure-c-testrunnerswitcher-721daafd8c34616f77a7697210470c0227dca20b/* %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/umqtt/deps/c-utility/testtools/umock-c/deps/testrunner
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
@@ -303,54 +307,59 @@ find . -type f -iname '*cmake*' -exec sed -i 's/python-py/python/g' {} \;
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1543268742
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1574729246
 mkdir -p clr-build
 pushd clr-build
+export GCC_IGNORE_WERROR=1
+export CFLAGS="$CFLAGS -fno-lto "
+export FCFLAGS="$CFLAGS -fno-lto "
+export FFLAGS="$CFLAGS -fno-lto "
+export CXXFLAGS="$CXXFLAGS -fno-lto "
 %cmake .. -Dskip_samples=ON \
 -Duse_edge_modules=ON \
 -Duse_prov_client=ON \
 -Dbuild_as_dynamic=ON
-make  %{?_smp_mflags} VERBOSE=1
+make  %{?_smp_mflags}  VERBOSE=1
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1543268742
+export SOURCE_DATE_EPOCH=1574729246
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/azure-iot-sdk
-cp LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/LICENSE
-cp c/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/c_LICENSE
-cp c/build_all/packaging/linux/debian/copyright %{buildroot}/usr/share/package-licenses/azure-iot-sdk/c_build_all_packaging_linux_debian_copyright
-cp c/c-utility/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/c_c-utility_LICENSE
-cp c/c-utility/build_all/packaging/linux/debian/copyright %{buildroot}/usr/share/package-licenses/azure-iot-sdk/c_c-utility_build_all_packaging_linux_debian_copyright
-cp c/c-utility/testtools/ctest/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/c_c-utility_testtools_ctest_LICENSE
-cp c/c-utility/testtools/umock-c/deps/ctest/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/c_c-utility_testtools_umock-c_deps_ctest_LICENSE
-cp c/deps/parson/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/c_deps_parson_LICENSE
-cp c/deps/uhttp/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/c_deps_uhttp_LICENSE
-cp c/deps/uhttp/deps/c-utility/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/c_deps_uhttp_deps_c-utility_LICENSE
-cp c/deps/uhttp/deps/c-utility/build_all/packaging/linux/debian/copyright %{buildroot}/usr/share/package-licenses/azure-iot-sdk/c_deps_uhttp_deps_c-utility_build_all_packaging_linux_debian_copyright
-cp c/deps/uhttp/deps/c-utility/testtools/ctest/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/c_deps_uhttp_deps_c-utility_testtools_ctest_LICENSE
-cp c/deps/uhttp/deps/c-utility/testtools/umock-c/deps/ctest/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/c_deps_uhttp_deps_c-utility_testtools_umock-c_deps_ctest_LICENSE
-cp c/iothub_client/samples/iothub_client_sample_mqtt_dm/pi_device/packaging/debian/copyright %{buildroot}/usr/share/package-licenses/azure-iot-sdk/c_iothub_client_samples_iothub_client_sample_mqtt_dm_pi_device_packaging_debian_copyright
-cp c/provisioning_client/deps/RIoT/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/c_provisioning_client_deps_RIoT_LICENSE
-cp c/provisioning_client/deps/utpm/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/c_provisioning_client_deps_utpm_LICENSE
-cp c/provisioning_client/deps/utpm/deps/c-utility/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/c_provisioning_client_deps_utpm_deps_c-utility_LICENSE
-cp c/provisioning_client/deps/utpm/deps/c-utility/build_all/packaging/linux/debian/copyright %{buildroot}/usr/share/package-licenses/azure-iot-sdk/c_provisioning_client_deps_utpm_deps_c-utility_build_all_packaging_linux_debian_copyright
-cp c/provisioning_client/deps/utpm/deps/c-utility/testtools/ctest/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/c_provisioning_client_deps_utpm_deps_c-utility_testtools_ctest_LICENSE
-cp c/provisioning_client/deps/utpm/deps/c-utility/testtools/umock-c/deps/ctest/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/c_provisioning_client_deps_utpm_deps_c-utility_testtools_umock-c_deps_ctest_LICENSE
-cp c/uamqp/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/c_uamqp_LICENSE
-cp c/uamqp/build_all/packaging/linux/debian/copyright %{buildroot}/usr/share/package-licenses/azure-iot-sdk/c_uamqp_build_all_packaging_linux_debian_copyright
-cp c/uamqp/deps/azure-c-shared-utility/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/c_uamqp_deps_azure-c-shared-utility_LICENSE
-cp c/uamqp/deps/azure-c-shared-utility/build_all/packaging/linux/debian/copyright %{buildroot}/usr/share/package-licenses/azure-iot-sdk/c_uamqp_deps_azure-c-shared-utility_build_all_packaging_linux_debian_copyright
-cp c/uamqp/deps/azure-c-shared-utility/testtools/ctest/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/c_uamqp_deps_azure-c-shared-utility_testtools_ctest_LICENSE
-cp c/uamqp/deps/azure-c-shared-utility/testtools/umock-c/deps/ctest/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/c_uamqp_deps_azure-c-shared-utility_testtools_umock-c_deps_ctest_LICENSE
-cp c/uamqp/deps/azure-ctest/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/c_uamqp_deps_azure-ctest_LICENSE
-cp c/uamqp/deps/umock-c/deps/ctest/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/c_uamqp_deps_umock-c_deps_ctest_LICENSE
-cp c/umqtt/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/c_umqtt_LICENSE
-cp c/umqtt/deps/c-utility/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/c_umqtt_deps_c-utility_LICENSE
-cp c/umqtt/deps/c-utility/build_all/packaging/linux/debian/copyright %{buildroot}/usr/share/package-licenses/azure-iot-sdk/c_umqtt_deps_c-utility_build_all_packaging_linux_debian_copyright
-cp c/umqtt/deps/c-utility/testtools/ctest/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/c_umqtt_deps_c-utility_testtools_ctest_LICENSE
-cp c/umqtt/deps/c-utility/testtools/umock-c/deps/ctest/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/c_umqtt_deps_c-utility_testtools_umock-c_deps_ctest_LICENSE
+cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/47e4690f60befa1918e5ac38723973fe4cf04e9b
+cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/47e4690f60befa1918e5ac38723973fe4cf04e9b
+cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/build_all/packaging/linux/debian/copyright %{buildroot}/usr/share/package-licenses/azure-iot-sdk/6139d90e341cffe78b5b3f5a0f6c1becb6b6a4c7
+cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/c-utility/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/47e4690f60befa1918e5ac38723973fe4cf04e9b
+cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/c-utility/build_all/packaging/linux/debian/copyright %{buildroot}/usr/share/package-licenses/azure-iot-sdk/b936129838be63462c2583bfd059d8736f39ab87
+cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/c-utility/testtools/ctest/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/47e4690f60befa1918e5ac38723973fe4cf04e9b
+cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/c-utility/testtools/umock-c/deps/ctest/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/47e4690f60befa1918e5ac38723973fe4cf04e9b
+cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/deps/parson/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/907314f1b5ac6f68c1906863389e4f2bed2a284d
+cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/deps/uhttp/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/03e1fe6fd0bc6d73c3cd3370d5f0a73c4fcb60d6
+cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/deps/uhttp/deps/c-utility/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/47e4690f60befa1918e5ac38723973fe4cf04e9b
+cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/deps/uhttp/deps/c-utility/build_all/packaging/linux/debian/copyright %{buildroot}/usr/share/package-licenses/azure-iot-sdk/b936129838be63462c2583bfd059d8736f39ab87
+cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/deps/uhttp/deps/c-utility/testtools/ctest/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/47e4690f60befa1918e5ac38723973fe4cf04e9b
+cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/deps/uhttp/deps/c-utility/testtools/umock-c/deps/ctest/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/47e4690f60befa1918e5ac38723973fe4cf04e9b
+cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/iothub_client/samples/iothub_client_sample_mqtt_dm/pi_device/packaging/debian/copyright %{buildroot}/usr/share/package-licenses/azure-iot-sdk/31034815375ad687af0a1b5d1c039587d3e93759
+cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/provisioning_client/deps/RIoT/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/03e1fe6fd0bc6d73c3cd3370d5f0a73c4fcb60d6
+cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/provisioning_client/deps/utpm/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/fc3defdb0ec07babc6fa8696113812c5a4ccd74a
+cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/provisioning_client/deps/utpm/deps/c-utility/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/47e4690f60befa1918e5ac38723973fe4cf04e9b
+cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/provisioning_client/deps/utpm/deps/c-utility/build_all/packaging/linux/debian/copyright %{buildroot}/usr/share/package-licenses/azure-iot-sdk/b936129838be63462c2583bfd059d8736f39ab87
+cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/provisioning_client/deps/utpm/deps/c-utility/testtools/ctest/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/47e4690f60befa1918e5ac38723973fe4cf04e9b
+cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/provisioning_client/deps/utpm/deps/c-utility/testtools/umock-c/deps/ctest/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/47e4690f60befa1918e5ac38723973fe4cf04e9b
+cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/uamqp/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/47e4690f60befa1918e5ac38723973fe4cf04e9b
+cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/uamqp/build_all/packaging/linux/debian/copyright %{buildroot}/usr/share/package-licenses/azure-iot-sdk/fcd11f2e53968b872b48efbb6cf2a18c5a0d04e5
+cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/uamqp/deps/azure-c-shared-utility/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/47e4690f60befa1918e5ac38723973fe4cf04e9b
+cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/uamqp/deps/azure-c-shared-utility/build_all/packaging/linux/debian/copyright %{buildroot}/usr/share/package-licenses/azure-iot-sdk/b936129838be63462c2583bfd059d8736f39ab87
+cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/uamqp/deps/azure-c-shared-utility/testtools/ctest/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/47e4690f60befa1918e5ac38723973fe4cf04e9b
+cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/uamqp/deps/azure-c-shared-utility/testtools/umock-c/deps/ctest/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/47e4690f60befa1918e5ac38723973fe4cf04e9b
+cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/uamqp/deps/azure-ctest/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/47e4690f60befa1918e5ac38723973fe4cf04e9b
+cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/uamqp/deps/umock-c/deps/ctest/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/47e4690f60befa1918e5ac38723973fe4cf04e9b
+cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/umqtt/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/6298ab377445ac77e0146fe1794ff402f52b5631
+cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/umqtt/deps/c-utility/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/47e4690f60befa1918e5ac38723973fe4cf04e9b
+cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/umqtt/deps/c-utility/build_all/packaging/linux/debian/copyright %{buildroot}/usr/share/package-licenses/azure-iot-sdk/b936129838be63462c2583bfd059d8736f39ab87
+cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/umqtt/deps/c-utility/testtools/ctest/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/47e4690f60befa1918e5ac38723973fe4cf04e9b
+cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/umqtt/deps/c-utility/testtools/umock-c/deps/ctest/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/47e4690f60befa1918e5ac38723973fe4cf04e9b
 pushd clr-build
 %make_install
 popd
@@ -659,39 +668,15 @@ popd
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/azure-iot-sdk/LICENSE
-/usr/share/package-licenses/azure-iot-sdk/c_LICENSE
-/usr/share/package-licenses/azure-iot-sdk/c_build_all_packaging_linux_debian_copyright
-/usr/share/package-licenses/azure-iot-sdk/c_c-utility_LICENSE
-/usr/share/package-licenses/azure-iot-sdk/c_c-utility_build_all_packaging_linux_debian_copyright
-/usr/share/package-licenses/azure-iot-sdk/c_c-utility_testtools_ctest_LICENSE
-/usr/share/package-licenses/azure-iot-sdk/c_c-utility_testtools_umock-c_deps_ctest_LICENSE
-/usr/share/package-licenses/azure-iot-sdk/c_deps_parson_LICENSE
-/usr/share/package-licenses/azure-iot-sdk/c_deps_uhttp_LICENSE
-/usr/share/package-licenses/azure-iot-sdk/c_deps_uhttp_deps_c-utility_LICENSE
-/usr/share/package-licenses/azure-iot-sdk/c_deps_uhttp_deps_c-utility_build_all_packaging_linux_debian_copyright
-/usr/share/package-licenses/azure-iot-sdk/c_deps_uhttp_deps_c-utility_testtools_ctest_LICENSE
-/usr/share/package-licenses/azure-iot-sdk/c_deps_uhttp_deps_c-utility_testtools_umock-c_deps_ctest_LICENSE
-/usr/share/package-licenses/azure-iot-sdk/c_iothub_client_samples_iothub_client_sample_mqtt_dm_pi_device_packaging_debian_copyright
-/usr/share/package-licenses/azure-iot-sdk/c_provisioning_client_deps_RIoT_LICENSE
-/usr/share/package-licenses/azure-iot-sdk/c_provisioning_client_deps_utpm_LICENSE
-/usr/share/package-licenses/azure-iot-sdk/c_provisioning_client_deps_utpm_deps_c-utility_LICENSE
-/usr/share/package-licenses/azure-iot-sdk/c_provisioning_client_deps_utpm_deps_c-utility_build_all_packaging_linux_debian_copyright
-/usr/share/package-licenses/azure-iot-sdk/c_provisioning_client_deps_utpm_deps_c-utility_testtools_ctest_LICENSE
-/usr/share/package-licenses/azure-iot-sdk/c_provisioning_client_deps_utpm_deps_c-utility_testtools_umock-c_deps_ctest_LICENSE
-/usr/share/package-licenses/azure-iot-sdk/c_uamqp_LICENSE
-/usr/share/package-licenses/azure-iot-sdk/c_uamqp_build_all_packaging_linux_debian_copyright
-/usr/share/package-licenses/azure-iot-sdk/c_uamqp_deps_azure-c-shared-utility_LICENSE
-/usr/share/package-licenses/azure-iot-sdk/c_uamqp_deps_azure-c-shared-utility_build_all_packaging_linux_debian_copyright
-/usr/share/package-licenses/azure-iot-sdk/c_uamqp_deps_azure-c-shared-utility_testtools_ctest_LICENSE
-/usr/share/package-licenses/azure-iot-sdk/c_uamqp_deps_azure-c-shared-utility_testtools_umock-c_deps_ctest_LICENSE
-/usr/share/package-licenses/azure-iot-sdk/c_uamqp_deps_azure-ctest_LICENSE
-/usr/share/package-licenses/azure-iot-sdk/c_uamqp_deps_umock-c_deps_ctest_LICENSE
-/usr/share/package-licenses/azure-iot-sdk/c_umqtt_LICENSE
-/usr/share/package-licenses/azure-iot-sdk/c_umqtt_deps_c-utility_LICENSE
-/usr/share/package-licenses/azure-iot-sdk/c_umqtt_deps_c-utility_build_all_packaging_linux_debian_copyright
-/usr/share/package-licenses/azure-iot-sdk/c_umqtt_deps_c-utility_testtools_ctest_LICENSE
-/usr/share/package-licenses/azure-iot-sdk/c_umqtt_deps_c-utility_testtools_umock-c_deps_ctest_LICENSE
+/usr/share/package-licenses/azure-iot-sdk/03e1fe6fd0bc6d73c3cd3370d5f0a73c4fcb60d6
+/usr/share/package-licenses/azure-iot-sdk/31034815375ad687af0a1b5d1c039587d3e93759
+/usr/share/package-licenses/azure-iot-sdk/47e4690f60befa1918e5ac38723973fe4cf04e9b
+/usr/share/package-licenses/azure-iot-sdk/6139d90e341cffe78b5b3f5a0f6c1becb6b6a4c7
+/usr/share/package-licenses/azure-iot-sdk/6298ab377445ac77e0146fe1794ff402f52b5631
+/usr/share/package-licenses/azure-iot-sdk/907314f1b5ac6f68c1906863389e4f2bed2a284d
+/usr/share/package-licenses/azure-iot-sdk/b936129838be63462c2583bfd059d8736f39ab87
+/usr/share/package-licenses/azure-iot-sdk/fc3defdb0ec07babc6fa8696113812c5a4ccd74a
+/usr/share/package-licenses/azure-iot-sdk/fcd11f2e53968b872b48efbb6cf2a18c5a0d04e5
 
 %files python
 %defattr(-,root,root,-)

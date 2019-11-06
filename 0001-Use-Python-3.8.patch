@@ -1,14 +1,14 @@
-From a782efe5075c932b7251fb814b491caa85e808ba Mon Sep 17 00:00:00 2001
+From 510f26082b4618c35acdea8a5aed8a13850caeac Mon Sep 17 00:00:00 2001
 From: "Brett T. Warden" <brett.t.warden@intel.com>
 Date: Tue, 20 Nov 2018 10:14:21 -0800
-Subject: [PATCH] Use Python 3.7
+Subject: [PATCH] Use Python 3.8
 
 ---
  CMakeLists.txt | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 4e326c66..95290c7a 100644
+index 4e326c6..600636e 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
 @@ -4,7 +4,7 @@
@@ -16,10 +16,10 @@ index 4e326c66..95290c7a 100644
  project(azure_iot_sdk-python)
  
 -set(build_python "2.7" CACHE build_python "2.7")
-+set(build_python "3.7" CACHE build_python "3.7")
++set(build_python "3.8" CACHE build_python "3.8")
  
  add_subdirectory(c)
  
 -- 
-2.19.1
+2.24.0
 
