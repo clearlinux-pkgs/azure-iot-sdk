@@ -4,7 +4,7 @@
 #
 Name     : azure-iot-sdk
 Version  : elease.2018.10.31
-Release  : 21
+Release  : 22
 URL      : https://github.com/Azure/azure-iot-sdk-python/archive/release_2018_10_31.tar.gz
 Source0  : https://github.com/Azure/azure-iot-sdk-python/archive/release_2018_10_31.tar.gz
 Source1  : https://github.com/Azure/azure-c-shared-utility/archive/4deb950a4154e9baa39c87d75dd323dd58e239b7.tar.gz
@@ -75,13 +75,15 @@ Patch3: 0003-Remove-_dll-from-library-name.patch
 Patch4: 0004-Link-to-proper-shared-object.patch
 
 %description
-DICE/RIoT Test and Tools
+# Dockerfiles for the Azure IoT SDK for Python
+The current implementation of the Python SDK is a wrapper over the Azure IoT C SDK and has external dependencies that cannot be installed with pip (Boost, libssl, curl...). The versions for these dependencies have to match exactly (because of how C linkers work).
 
 %package dev
 Summary: dev components for the azure-iot-sdk package.
 Group: Development
 Requires: azure-iot-sdk-lib = %{version}-%{release}
 Provides: azure-iot-sdk-devel = %{version}-%{release}
+Requires: azure-iot-sdk = %{version}-%{release}
 Requires: azure-iot-sdk = %{version}-%{release}
 
 %description dev
@@ -301,16 +303,20 @@ cp -r %{_builddir}/azure-c-testrunnerswitcher-721daafd8c34616f77a7697210470c0227
 
 %build
 ## build_prepend content
+# Disable -Werror everywhere
 find . -type f -iname '*cmake*' -exec sed -i 's/-Werror//g' {} \;
+
+# Point to the correct Boost Python libs
 find . -type f -iname '*cmake*' -exec sed -i 's/python-py/python/g' {} \;
 ## build_prepend end
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1574729246
+export SOURCE_DATE_EPOCH=1575548210
 mkdir -p clr-build
 pushd clr-build
+# -Werror is for werrorists
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$CFLAGS -fno-lto "
@@ -324,7 +330,7 @@ make  %{?_smp_mflags}  VERBOSE=1
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1574729246
+export SOURCE_DATE_EPOCH=1575548210
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/azure-iot-sdk
 cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/47e4690f60befa1918e5ac38723973fe4cf04e9b
@@ -365,16 +371,24 @@ pushd clr-build
 popd
 ## install_append content
 export LD_LIBRARY_PATH=%{buildroot}/usr/lib64
+
 install -m 0755 clr-build/c/provisioning_client/deps/libmsr_riot.so %{buildroot}/usr/lib64/libmsr_riot.so
 install -m 0755 clr-build/c/provisioning_client/deps/utpm/libutpm.so %{buildroot}/usr/lib64/libutpm.so
+
 pushd ./build_all/linux/release_device_client
 cp -t iothub_client ../../../clr-build/c/python/src/iothub_client.so
 python3 setup.py install --root=%{buildroot}
 popd
+
 pushd ./build_all/linux/release_service_client
 cp -t iothub_service_client ../../../clr-build/c/python_service_client/src/iothub_service_client.so
 python3 setup.py install --root=%{buildroot}
 popd
+
+#pushd ./build_all/linux/release_provisioning_device_client
+#cp ../../../clr-build/c/provisioning_device_client_python/src/provisioning_device_client.so provisioning_device_client/provisioning_device_client.so
+#python setup.py install
+#popd
 ## install_append end
 
 %files
