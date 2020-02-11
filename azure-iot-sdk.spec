@@ -4,7 +4,7 @@
 #
 Name     : azure-iot-sdk
 Version  : elease.2018.10.31
-Release  : 25
+Release  : 26
 URL      : https://github.com/Azure/azure-iot-sdk-python/archive/release_2018_10_31.tar.gz
 Source0  : https://github.com/Azure/azure-iot-sdk-python/archive/release_2018_10_31.tar.gz
 Source1  : https://github.com/Azure/azure-c-shared-utility/archive/4deb950a4154e9baa39c87d75dd323dd58e239b7.tar.gz
@@ -57,11 +57,9 @@ Requires: azure-iot-sdk-license = %{version}-%{release}
 Requires: azure-iot-sdk-python = %{version}-%{release}
 Requires: azure-iot-sdk-python3 = %{version}-%{release}
 Requires: msrest
-BuildRequires : apache-maven
 BuildRequires : boost-dev
 BuildRequires : buildreq-cmake
 BuildRequires : buildreq-distutils3
-BuildRequires : buildreq-mvn
 BuildRequires : curl-dev
 BuildRequires : msrest
 BuildRequires : openssl-dev
@@ -75,15 +73,13 @@ Patch3: 0003-Remove-_dll-from-library-name.patch
 Patch4: 0004-Link-to-proper-shared-object.patch
 
 %description
-# Dockerfiles for the Azure IoT SDK for Python
-The current implementation of the Python SDK is a wrapper over the Azure IoT C SDK and has external dependencies that cannot be installed with pip (Boost, libssl, curl...). The versions for these dependencies have to match exactly (because of how C linkers work).
+DICE/RIoT Test and Tools
 
 %package dev
 Summary: dev components for the azure-iot-sdk package.
 Group: Development
 Requires: azure-iot-sdk-lib = %{version}-%{release}
 Provides: azure-iot-sdk-devel = %{version}-%{release}
-Requires: azure-iot-sdk = %{version}-%{release}
 Requires: azure-iot-sdk = %{version}-%{release}
 
 %description dev
@@ -313,10 +309,9 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1575548210
+export SOURCE_DATE_EPOCH=1581458518
 mkdir -p clr-build
 pushd clr-build
-# -Werror is for werrorists
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$CFLAGS -fno-lto "
@@ -330,7 +325,7 @@ make  %{?_smp_mflags}  VERBOSE=1
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1575548210
+export SOURCE_DATE_EPOCH=1581458518
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/azure-iot-sdk
 cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/47e4690f60befa1918e5ac38723973fe4cf04e9b
