@@ -1,2 +1,5 @@
 elease.2018.10.31
+curl-dev
+openssl-dev
+pkgconfig(libcurl)
 util-linux-dev

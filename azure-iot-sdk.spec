@@ -4,7 +4,7 @@
 #
 Name     : azure-iot-sdk
 Version  : elease.2018.10.31
-Release  : 26
+Release  : 27
 URL      : https://github.com/Azure/azure-iot-sdk-python/archive/release_2018_10_31.tar.gz
 Source0  : https://github.com/Azure/azure-iot-sdk-python/archive/release_2018_10_31.tar.gz
 Source1  : https://github.com/Azure/azure-c-shared-utility/archive/4deb950a4154e9baa39c87d75dd323dd58e239b7.tar.gz
@@ -63,7 +63,6 @@ BuildRequires : buildreq-distutils3
 BuildRequires : curl-dev
 BuildRequires : msrest
 BuildRequires : openssl-dev
-BuildRequires : pkg-config
 BuildRequires : pkgconfig(libcurl)
 BuildRequires : python3-dev
 BuildRequires : util-linux-dev
@@ -73,13 +72,15 @@ Patch3: 0003-Remove-_dll-from-library-name.patch
 Patch4: 0004-Link-to-proper-shared-object.patch
 
 %description
-DICE/RIoT Test and Tools
+# Dockerfiles for the Azure IoT SDK for Python
+The current implementation of the Python SDK is a wrapper over the Azure IoT C SDK and has external dependencies that cannot be installed with pip (Boost, libssl, curl...). The versions for these dependencies have to match exactly (because of how C linkers work).
 
 %package dev
 Summary: dev components for the azure-iot-sdk package.
 Group: Development
 Requires: azure-iot-sdk-lib = %{version}-%{release}
 Provides: azure-iot-sdk-devel = %{version}-%{release}
+Requires: azure-iot-sdk = %{version}-%{release}
 Requires: azure-iot-sdk = %{version}-%{release}
 
 %description dev
@@ -309,9 +310,10 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1581458518
+export SOURCE_DATE_EPOCH=1582848723
 mkdir -p clr-build
 pushd clr-build
+# -Werror is for werrorists
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$CFLAGS -fno-lto "
@@ -325,42 +327,23 @@ make  %{?_smp_mflags}  VERBOSE=1
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1581458518
+export SOURCE_DATE_EPOCH=1582848723
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/azure-iot-sdk
+cp %{_builddir}/RIoT-bc97a5eaff53535eddbdf95b4f477c6caf3b7788/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/03e1fe6fd0bc6d73c3cd3370d5f0a73c4fcb60d6
+cp %{_builddir}/azure-c-shared-utility-4deb950a4154e9baa39c87d75dd323dd58e239b7/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/47e4690f60befa1918e5ac38723973fe4cf04e9b
+cp %{_builddir}/azure-c-shared-utility-4deb950a4154e9baa39c87d75dd323dd58e239b7/build_all/packaging/linux/debian/copyright %{buildroot}/usr/share/package-licenses/azure-iot-sdk/b936129838be63462c2583bfd059d8736f39ab87
+cp %{_builddir}/azure-ctest-b1d09aff8212f1fb62ca9d6014cb3509d8b5559a/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/47e4690f60befa1918e5ac38723973fe4cf04e9b
+cp %{_builddir}/azure-iot-sdk-c-abacd2311a1b6d9fabc0743acf494d418fac8a30/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/47e4690f60befa1918e5ac38723973fe4cf04e9b
+cp %{_builddir}/azure-iot-sdk-c-abacd2311a1b6d9fabc0743acf494d418fac8a30/build_all/packaging/linux/debian/copyright %{buildroot}/usr/share/package-licenses/azure-iot-sdk/6139d90e341cffe78b5b3f5a0f6c1becb6b6a4c7
+cp %{_builddir}/azure-iot-sdk-c-abacd2311a1b6d9fabc0743acf494d418fac8a30/iothub_client/samples/iothub_client_sample_mqtt_dm/pi_device/packaging/debian/copyright %{buildroot}/usr/share/package-licenses/azure-iot-sdk/31034815375ad687af0a1b5d1c039587d3e93759
 cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/47e4690f60befa1918e5ac38723973fe4cf04e9b
-cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/47e4690f60befa1918e5ac38723973fe4cf04e9b
-cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/build_all/packaging/linux/debian/copyright %{buildroot}/usr/share/package-licenses/azure-iot-sdk/6139d90e341cffe78b5b3f5a0f6c1becb6b6a4c7
-cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/c-utility/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/47e4690f60befa1918e5ac38723973fe4cf04e9b
-cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/c-utility/build_all/packaging/linux/debian/copyright %{buildroot}/usr/share/package-licenses/azure-iot-sdk/b936129838be63462c2583bfd059d8736f39ab87
-cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/c-utility/testtools/ctest/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/47e4690f60befa1918e5ac38723973fe4cf04e9b
-cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/c-utility/testtools/umock-c/deps/ctest/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/47e4690f60befa1918e5ac38723973fe4cf04e9b
-cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/deps/parson/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/907314f1b5ac6f68c1906863389e4f2bed2a284d
-cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/deps/uhttp/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/03e1fe6fd0bc6d73c3cd3370d5f0a73c4fcb60d6
-cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/deps/uhttp/deps/c-utility/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/47e4690f60befa1918e5ac38723973fe4cf04e9b
-cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/deps/uhttp/deps/c-utility/build_all/packaging/linux/debian/copyright %{buildroot}/usr/share/package-licenses/azure-iot-sdk/b936129838be63462c2583bfd059d8736f39ab87
-cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/deps/uhttp/deps/c-utility/testtools/ctest/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/47e4690f60befa1918e5ac38723973fe4cf04e9b
-cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/deps/uhttp/deps/c-utility/testtools/umock-c/deps/ctest/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/47e4690f60befa1918e5ac38723973fe4cf04e9b
-cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/iothub_client/samples/iothub_client_sample_mqtt_dm/pi_device/packaging/debian/copyright %{buildroot}/usr/share/package-licenses/azure-iot-sdk/31034815375ad687af0a1b5d1c039587d3e93759
-cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/provisioning_client/deps/RIoT/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/03e1fe6fd0bc6d73c3cd3370d5f0a73c4fcb60d6
-cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/provisioning_client/deps/utpm/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/fc3defdb0ec07babc6fa8696113812c5a4ccd74a
-cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/provisioning_client/deps/utpm/deps/c-utility/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/47e4690f60befa1918e5ac38723973fe4cf04e9b
-cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/provisioning_client/deps/utpm/deps/c-utility/build_all/packaging/linux/debian/copyright %{buildroot}/usr/share/package-licenses/azure-iot-sdk/b936129838be63462c2583bfd059d8736f39ab87
-cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/provisioning_client/deps/utpm/deps/c-utility/testtools/ctest/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/47e4690f60befa1918e5ac38723973fe4cf04e9b
-cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/provisioning_client/deps/utpm/deps/c-utility/testtools/umock-c/deps/ctest/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/47e4690f60befa1918e5ac38723973fe4cf04e9b
-cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/uamqp/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/47e4690f60befa1918e5ac38723973fe4cf04e9b
-cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/uamqp/build_all/packaging/linux/debian/copyright %{buildroot}/usr/share/package-licenses/azure-iot-sdk/fcd11f2e53968b872b48efbb6cf2a18c5a0d04e5
-cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/uamqp/deps/azure-c-shared-utility/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/47e4690f60befa1918e5ac38723973fe4cf04e9b
-cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/uamqp/deps/azure-c-shared-utility/build_all/packaging/linux/debian/copyright %{buildroot}/usr/share/package-licenses/azure-iot-sdk/b936129838be63462c2583bfd059d8736f39ab87
-cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/uamqp/deps/azure-c-shared-utility/testtools/ctest/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/47e4690f60befa1918e5ac38723973fe4cf04e9b
-cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/uamqp/deps/azure-c-shared-utility/testtools/umock-c/deps/ctest/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/47e4690f60befa1918e5ac38723973fe4cf04e9b
-cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/uamqp/deps/azure-ctest/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/47e4690f60befa1918e5ac38723973fe4cf04e9b
-cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/uamqp/deps/umock-c/deps/ctest/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/47e4690f60befa1918e5ac38723973fe4cf04e9b
-cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/umqtt/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/6298ab377445ac77e0146fe1794ff402f52b5631
-cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/umqtt/deps/c-utility/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/47e4690f60befa1918e5ac38723973fe4cf04e9b
-cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/umqtt/deps/c-utility/build_all/packaging/linux/debian/copyright %{buildroot}/usr/share/package-licenses/azure-iot-sdk/b936129838be63462c2583bfd059d8736f39ab87
-cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/umqtt/deps/c-utility/testtools/ctest/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/47e4690f60befa1918e5ac38723973fe4cf04e9b
-cp %{_builddir}/azure-iot-sdk-python-release_2018_10_31/c/umqtt/deps/c-utility/testtools/umock-c/deps/ctest/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/47e4690f60befa1918e5ac38723973fe4cf04e9b
+cp %{_builddir}/azure-uamqp-c-8da237b55317e575b361dd630ff5d862bc0b760c/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/47e4690f60befa1918e5ac38723973fe4cf04e9b
+cp %{_builddir}/azure-uamqp-c-8da237b55317e575b361dd630ff5d862bc0b760c/build_all/packaging/linux/debian/copyright %{buildroot}/usr/share/package-licenses/azure-iot-sdk/fcd11f2e53968b872b48efbb6cf2a18c5a0d04e5
+cp %{_builddir}/azure-uhttp-c-d06524b543c52519e20da843d2df1d6e6e40a05d/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/03e1fe6fd0bc6d73c3cd3370d5f0a73c4fcb60d6
+cp %{_builddir}/azure-umqtt-c-640f9d649bd81f10ea6ce005e207cafe49ae3383/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/6298ab377445ac77e0146fe1794ff402f52b5631
+cp %{_builddir}/azure-utpm-c-a82e758bfcea806167e19d9dd94c2e1cc223aaee/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/fc3defdb0ec07babc6fa8696113812c5a4ccd74a
+cp %{_builddir}/parson-0a1896939faff5f69e179637fc49f678ff0128ba/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/907314f1b5ac6f68c1906863389e4f2bed2a284d
 pushd clr-build
 %make_install
 popd
