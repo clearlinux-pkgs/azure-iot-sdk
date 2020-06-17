@@ -4,7 +4,7 @@
 #
 Name     : azure-iot-sdk
 Version  : elease.2018.10.31
-Release  : 28
+Release  : 29
 URL      : https://github.com/Azure/azure-iot-sdk-python/archive/release_2018_10_31.tar.gz
 Source0  : https://github.com/Azure/azure-iot-sdk-python/archive/release_2018_10_31.tar.gz
 Source1  : https://github.com/Azure/azure-c-shared-utility/archive/4deb950a4154e9baa39c87d75dd323dd58e239b7.tar.gz
@@ -72,15 +72,14 @@ Patch3: 0003-Remove-_dll-from-library-name.patch
 Patch4: 0004-Link-to-proper-shared-object.patch
 
 %description
-# Dockerfiles for the Azure IoT SDK for Python
-The current implementation of the Python SDK is a wrapper over the Azure IoT C SDK and has external dependencies that cannot be installed with pip (Boost, libssl, curl...). The versions for these dependencies have to match exactly (because of how C linkers work).
+# Microsoft Azure IoT SDKs for Python
+![Build Status](https://azure-iot-sdks.visualstudio.com/azure-iot-sdks/_apis/build/status/python/python-canary)
 
 %package dev
 Summary: dev components for the azure-iot-sdk package.
 Group: Development
 Requires: azure-iot-sdk-lib = %{version}-%{release}
 Provides: azure-iot-sdk-devel = %{version}-%{release}
-Requires: azure-iot-sdk = %{version}-%{release}
 Requires: azure-iot-sdk = %{version}-%{release}
 
 %description dev
@@ -310,14 +309,13 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1582848723
+export SOURCE_DATE_EPOCH=1592429767
 mkdir -p clr-build
 pushd clr-build
-# -Werror is for werrorists
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
-export FCFLAGS="$CFLAGS -fno-lto "
-export FFLAGS="$CFLAGS -fno-lto "
+export FCFLAGS="$FFLAGS -fno-lto "
+export FFLAGS="$FFLAGS -fno-lto "
 export CXXFLAGS="$CXXFLAGS -fno-lto "
 %cmake .. -Dskip_samples=ON \
 -Duse_edge_modules=ON \
@@ -327,7 +325,7 @@ make  %{?_smp_mflags}  VERBOSE=1
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1582848723
+export SOURCE_DATE_EPOCH=1592429767
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/azure-iot-sdk
 cp %{_builddir}/RIoT-bc97a5eaff53535eddbdf95b4f477c6caf3b7788/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/03e1fe6fd0bc6d73c3cd3370d5f0a73c4fcb60d6
