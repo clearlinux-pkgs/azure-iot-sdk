@@ -4,7 +4,7 @@
 #
 Name     : azure-iot-sdk
 Version  : elease.2018.10.31
-Release  : 36
+Release  : 37
 URL      : https://github.com/Azure/azure-iot-sdk-python/archive/release_2018_10_31.tar.gz
 Source0  : https://github.com/Azure/azure-iot-sdk-python/archive/release_2018_10_31.tar.gz
 Source1  : https://github.com/Azure/azure-c-shared-utility/archive/4deb950a4154e9baa39c87d75dd323dd58e239b7.tar.gz
@@ -309,7 +309,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1592429767
+export SOURCE_DATE_EPOCH=1608063345
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -320,12 +320,13 @@ export CXXFLAGS="$CXXFLAGS -fno-lto "
 %cmake .. -Dskip_samples=ON \
 -Duse_edge_modules=ON \
 -Duse_prov_client=ON \
--Dbuild_as_dynamic=ON
-make  %{?_smp_mflags}  VERBOSE=1
+-Dbuild_as_dynamic=ON \
+-Dbuild_python=3.9
+make  %{?_smp_mflags}
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1592429767
+export SOURCE_DATE_EPOCH=1608063345
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/azure-iot-sdk
 cp %{_builddir}/RIoT-bc97a5eaff53535eddbdf95b4f477c6caf3b7788/LICENSE %{buildroot}/usr/share/package-licenses/azure-iot-sdk/03e1fe6fd0bc6d73c3cd3370d5f0a73c4fcb60d6
